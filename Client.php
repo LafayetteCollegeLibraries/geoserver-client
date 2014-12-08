@@ -148,7 +148,9 @@ class Client {
     //$request = call_user_func(array($this->client, $method), $url, array('json' => $params));
 
     //$params = array_merge(array($url), array_splice(func_get_args(), 2));
-    $params = array_splice(func_get_args(), 2);
+
+    $args = func_get_args();
+    $params = array_splice($args, 2);
     array_unshift($params, $url);
 
     $request = call_user_func_array(array($this->client, $method), $params);

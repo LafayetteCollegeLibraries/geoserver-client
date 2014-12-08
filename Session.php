@@ -58,7 +58,7 @@ class Session {
 
     if(!is_null($consumer)) {
 
-      $this->client =  new Client($this, $consumer);
+      $this->client = new Client($this, $consumer);
     }
   }
 
