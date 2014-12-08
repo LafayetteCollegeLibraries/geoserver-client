@@ -21,6 +21,7 @@ class CoverageTest extends PHPUnit_Framework_TestCase {
 
     $this->url = 'https://localhost/geoserver';
     $this->pass = 'secret';
+    $this->file_path = 'file://' . __DIR__ . '/fixtures/cea.tif';
 
     $this->plugin->addResponse(new Guzzle\Http\Message\Response(200));
     $this->session = new Session('admin', $this->pass, $this->url, $this->consumer);
@@ -37,10 +38,45 @@ class CoverageTest extends PHPUnit_Framework_TestCase {
     try {
 
       $this->plugin->addResponse(new Guzzle\Http\Message\Response(200, array('Content-Type' => 'application/json'), json_encode(array('coverage' => array()))));
-      $coverage_store = new Coverage($this->session->client, 'test_coverage_store_a', $this->workspace);
+      $coverage = new Coverage($this->session->client, 'test_coverage_a', $this->coverage_store);
     } catch(Exception $e) {
 
       $this->fail($e->getMessage());
     }
+  }
+
+  function testCreate() {
+
+    try {
+
+      $this->plugin->addResponse(new Guzzle\Http\Message\Response(200, array('Content-Type' => 'application/json'), json_encode(array('coverage' => array()))));
+      $this->plugin->addResponse(new Guzzle\Http\Message\Response(200, array('Content-Type' => 'application/json'), json_encode(array('coverage' => array()))));
+
+      $coverage = new Coverage($this->session->client, 'test_coverage_b', $this->coverage_store);
+
+      $this->plugin->addResponse(new Guzzle\Http\Message\Response(200, array('Content-Type' => 'application/json'), json_encode(array('coverage' => array()))));
+      $coverage->create($this->file_path);
+    } catch(Exception $e) {
+
+      $this->fail($e->getMessage());
+    }
+  }
+
+  /**
+   * @todo Implement for integration testing
+   *
+   */
+  function testUpdate() {
+
+
+  }
+
+  /**
+   * @todo Implement for integration testing
+   *
+   */
+  function testDelete($recurse = FALSE) {
+
+
   }
 }

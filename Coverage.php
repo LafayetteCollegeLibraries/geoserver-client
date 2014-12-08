@@ -16,6 +16,7 @@ class Coverage extends Resource {
 
   public $coveragestore;
   private $base_path;
+  public $granules;
 
   function __construct($client, $name, $coverage_store) {
 
@@ -36,9 +37,25 @@ class Coverage extends Resource {
   /**
    * Create remote resource.
    */
-  public function create() {
+  public function create($file_path) {
 
-    return $this->client->post($this->post_path);
+    //return $this->client->post($this->post_path);
+    $fh = fopen($file_path, "rb");
+
+    if(!preg_match('/tiff?$/', $file_path)) {
+
+      throw new \Exception("Unsupported file format for $file_path");
+    }
+    $response = $this->client->post($this->post_path . '.json',
+				    $fh,
+				    array('content-type' => 'image/tiff'));
+
+    if(!$response->isSuccessful()) {
+
+      throw new Exception("Failed to create a coverage store from $file_path");
+    }
+
+    return $this->read();
   }
 
   /**

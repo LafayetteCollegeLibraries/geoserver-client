@@ -1,6 +1,6 @@
 <?php namespace IslandoraGeoServer;
 
-include_once __DIR__ . "/../vendor/autoload.php";
+include_once __DIR__ . "/vendor/autoload.php";
 
 /**
  * Class for the Islandora/GeoServer API

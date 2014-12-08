@@ -19,9 +19,11 @@ class Featuretype extends Resource {
   function __construct($client, $name, $data_store) {
 
     $this->data_store = $data_store;
-    $this->base_path = 'workspaces/' . $this->data_store->workspace->name . '/coveragestores/' . $this->data_store->name . '/coverages';
+    $this->base_path = 'workspaces/' . $this->data_store->workspace->name . '/datastores/' . $this->data_store->name . '/featuretypes';
 
     $this->post_path = $this->base_path;
+    $this->read_path = $this->base_path . '/' . $this->name . '.json';
+    $this->put_path = $this->read_path;
 
     parent::__construct($client, $name);
   }
@@ -29,9 +31,25 @@ class Featuretype extends Resource {
   /**
    * Create remote resource.
    */
-  public function create() {
+  public function create($file_path) {
 
-    return $this->client->post($this->post_path);
+    //return $this->client->post($this->post_path);
+    $fh = fopen($file_path, "rb");
+
+    if(!preg_match('/zip?$/', $file_path)) {
+
+      throw new \Exception("Unsupported file format for $file_path");
+    }
+    $response = $this->client->post($this->post_path . '.json',
+				    $fh,
+				    array('content-type' => 'application/zip'));
+
+    if(!$response->isSuccessful()) {
+
+      throw new Exception("Failed to create a coverage store from $file_path");
+    }
+
+    return $this->read();
   }
 
   /**
@@ -39,7 +57,7 @@ class Featuretype extends Resource {
    */
   public function read() {
 
-    $response = $this->client->get($this->base_path . '/' . $this->name . '.json', array(), array('content-type' => 'application/json'));
+    $response = $this->client->get($this->read_path, array(), array('content-type' => 'application/json'));
 
     // If this coverage store cannot be found, and if a file path was set...
     if($response->getStatusCode() == 404 and !is_null($this->file_path)) {
