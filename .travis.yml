@@ -1,5 +1,7 @@
 language: php
 php:
   - 5.3
-install: composer install
-script: phpunit tests
+install:
+  - composer self-update
+  - composer install
+script: php vendor/bin/phpunit tests

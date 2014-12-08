@@ -21,7 +21,7 @@ class CoverageTest extends PHPUnit_Framework_TestCase {
 
     $this->url = 'https://localhost/geoserver';
     $this->pass = 'secret';
-    $this->file_path = 'file://' . __DIR__ . '/fixtures/cea.tif';
+    $this->file_path = 'file://' . __DIR__ . '/fixtures/test_geo.tif';
 
     $this->plugin->addResponse(new Guzzle\Http\Message\Response(200));
     $this->session = new Session('admin', $this->pass, $this->url, $this->consumer);
