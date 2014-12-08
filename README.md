@@ -16,4 +16,4 @@ The author also remains hopeful that this code base shall, at the very least, se
 Contributions are, at this point, welcome from all parties, be they members of the Cartaro, Islandora, or Drupal communities (or, even, simply curious persons with some interest in involving themselves in this work).
 
 ### Managing Issues
-For those looking to contribute, please contact either the author or any collaborator in order to properly manage feature or improvement requests as [issues](/LafayetteCollegeLibraries/geoserver-client/issues).
+For those looking to contribute, please contact either the author or any collaborator in order to properly manage feature or improvement requests as [issues](https://github.com/LafayetteCollegeLibraries/geoserver-client/issues).
