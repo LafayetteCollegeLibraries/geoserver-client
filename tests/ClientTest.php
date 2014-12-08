@@ -66,7 +66,8 @@ $this->plugin->addResponse(new Guzzle\Http\Message\Response(200, array('Content-
     $this->plugin->addResponse(new Guzzle\Http\Message\Response(200));
     $client->get('workspaces/default');
 
-    $response = array_pop($this->plugin->getReceivedRequests());
+    $received_requests = $this->plugin->getReceivedRequests();
+    $response = array_pop($received_requests);
     $this->assertEquals($this->url . '/rest' . '/workspaces/default', $response->getUrl());
   }
 
@@ -79,7 +80,8 @@ $this->plugin->addResponse(new Guzzle\Http\Message\Response(200, array('Content-
 
     $client->post('workspaces', $data);
 
-    $response = array_pop($this->plugin->getReceivedRequests());
+    $received_requests = $this->plugin->getReceivedRequests();
+    $response = array_pop($received_requests);
     $this->assertEquals($this->url . '/rest' . '/workspaces', $response->getUrl());
   }
 
@@ -92,7 +94,8 @@ $this->plugin->addResponse(new Guzzle\Http\Message\Response(200, array('Content-
 
     $client->put('workspaces/test_workspace_c', $data);
 
-    $response = array_pop($this->plugin->getReceivedRequests());
+    $received_requests = $this->plugin->getReceivedRequests();
+    $response = array_pop($received_requests);
     $this->assertEquals($this->url . '/rest' . '/workspaces/test_workspace_c', $response->getUrl());
   }
 
@@ -103,7 +106,8 @@ $this->plugin->addResponse(new Guzzle\Http\Message\Response(200, array('Content-
     $this->plugin->addResponse(new Guzzle\Http\Message\Response(200));
     $client->delete('workspaces/test_workspace_c');
 
-    $response = array_pop($this->plugin->getReceivedRequests());
+    $received_requests = $this->plugin->getReceivedRequests();
+    $response = array_pop($received_requests);
     $this->assertEquals($this->url . '/rest' . '/workspaces/test_workspace_c', $response->getUrl());
   }
 }
